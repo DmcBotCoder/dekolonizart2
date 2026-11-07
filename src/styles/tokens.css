@@ -23,7 +23,7 @@
   /* ---------- Colour: raw palette ---------- */
   --ink: #181616; /* darkest neutral — running text on light surfaces */
   --ink-muted: #464040; /* warm charcoal — muted text on light surfaces */
-  --brown: #3b2c2c; /* deep brown — alternate dark surface */
+  --brown: #3b2c2c; /* deep brown — reserved raw value, not yet consumed by a role here; available to later component CSS Modules (e.g. torn-paper texture accents) */
   --maroon: #5d1d1d; /* dark maroon — "stage" dark surface */
   --rust: #7e2105; /* supporting accent / strong focus ring */
   --forest: #135406; /* supporting accent — forest green */
