@@ -1,0 +1,582 @@
+/* ==========================================================================
+   Home opening — "Torn Archive".
+   An oversized headline pasted over a collage of torn photographs: the past
+   ("Remembrance") is set thin, on a strip cut from the stage's own maroon; the
+   future ("Renewal") is set heavy, on a strip of pale-lime paper. The next
+   performance is pinned on like a ticket stub. The hero's bottom edge is torn
+   and the next section slides in under it (see "The tear" below).
+
+   Motion is only ever *declared* under html.motion-ok (set before paint by the
+   boot script). Under html.reduce-motion none of the start states or
+   animations below exist, so the final composition is the only frame ever
+   rendered — the torn shapes stay, only the movement goes.
+   ========================================================================== */
+
+.hero {
+  /* Depth of the torn edge; shared with .heroNext. */
+  --tear: clamp(1.5rem, 0.9rem + 2.6vw, 3.5rem);
+  position: relative;
+  z-index: 2;
+  overflow: clip;
+  padding-bottom: var(--tear);
+  /* Straight on three sides, ripped along the bottom. Each point is
+     `x calc(100% - var(--tear) * k)`: k = 0 is the hero's lowest point, k = 1
+     the top of the tear band. Points were generated once (a slow wave plus
+     fine seeded jitter, unevenly spaced) and pasted in as static values. */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--tear) * 0.33),
+    96.99% calc(100% - var(--tear) * 0.59),
+    95.68% calc(100% - var(--tear) * 0.73),
+    93.61% calc(100% - var(--tear) * 0.64),
+    91% calc(100% - var(--tear) * 0.66),
+    88.9% calc(100% - var(--tear) * 0.61),
+    86.57% calc(100% - var(--tear) * 0.68),
+    85.19% calc(100% - var(--tear) * 0.65),
+    82.69% calc(100% - var(--tear) * 0.85),
+    81.76% calc(100% - var(--tear) * 0.88),
+    79.84% calc(100% - var(--tear) * 0.95),
+    77.1% calc(100% - var(--tear) * 0.67),
+    75.07% calc(100% - var(--tear) * 0.73),
+    72.62% calc(100% - var(--tear) * 0.59),
+    70.43% calc(100% - var(--tear) * 0.67),
+    67.45% calc(100% - var(--tear) * 0.63),
+    65.85% calc(100% - var(--tear) * 0.75),
+    64.25% calc(100% - var(--tear) * 0.56),
+    62.74% calc(100% - var(--tear) * 0.54),
+    61.23% calc(100% - var(--tear) * 0.55),
+    59.09% calc(100% - var(--tear) * 0.37),
+    56.18% calc(100% - var(--tear) * 0.15),
+    54.73% calc(100% - var(--tear) * 0.29),
+    52.71% calc(100% - var(--tear) * 0.32),
+    51.44% calc(100% - var(--tear) * 0.46),
+    50.51% calc(100% - var(--tear) * 0.35),
+    48.89% calc(100% - var(--tear) * 0.39),
+    45.87% calc(100% - var(--tear) * 0.22),
+    44.67% calc(100% - var(--tear) * 0.14),
+    43.19% calc(100% - var(--tear) * 0.08),
+    41.37% calc(100% - var(--tear) * 0.07),
+    39.3% calc(100% - var(--tear) * 0.22),
+    37.94% calc(100% - var(--tear) * 0.36),
+    36.04% calc(100% - var(--tear) * 0.45),
+    33.71% calc(100% - var(--tear) * 0.45),
+    31.67% calc(100% - var(--tear) * 0.39),
+    29.22% calc(100% - var(--tear) * 0.42),
+    27.47% calc(100% - var(--tear) * 0.36),
+    26.07% calc(100% - var(--tear) * 0.37),
+    24.42% calc(100% - var(--tear) * 0.39),
+    22.68% calc(100% - var(--tear) * 0.61),
+    19.78% calc(100% - var(--tear) * 0.63),
+    17.01% calc(100% - var(--tear) * 0.63),
+    15.24% calc(100% - var(--tear) * 0.59),
+    14.25% calc(100% - var(--tear) * 0.75),
+    12.92% calc(100% - var(--tear) * 0.63),
+    11.78% calc(100% - var(--tear) * 0.59),
+    9.55% calc(100% - var(--tear) * 0.57),
+    6.54% calc(100% - var(--tear) * 0.88),
+    3.6% calc(100% - var(--tear) * 0.94),
+    0.62% calc(100% - var(--tear) * 0.79),
+    0 calc(100% - var(--tear) * 0.42)
+  );
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--s-5);
+  padding-block: var(--s-6) var(--s-7);
+}
+
+.eyebrow {
+  position: relative;
+  z-index: 3;
+  max-width: 28ch;
+  font-family: var(--font-text);
+  font-size: var(--fs-lead);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--fg-muted);
+}
+
+/* ---------- The collage ---------- */
+
+.collage {
+  position: relative;
+  z-index: 1;
+  height: clamp(19rem, 84vw, 34rem);
+}
+
+/* Each piece is placed in % of the collage box, so the composition holds at any
+   size; object-fit: cover re-crops the photo. The drop shadow sits on the
+   piece so it follows the torn outline of the frame inside. */
+.piece {
+  position: absolute;
+  rotate: var(--tilt);
+  filter: drop-shadow(0 0.9rem 1.1rem rgb(24 22 22 / 0.5));
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+  clip-path: var(--edge);
+}
+
+/* Masking tape holding a print to the page. */
+.archive::after,
+.workshop::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  height: 1.35rem;
+  background: rgb(240 255 206 / 0.82);
+  clip-path: polygon(0 12%, 4% 0, 9% 18%, 14% 2%, 86% 0, 91% 16%, 96% 4%, 100% 20%, 98% 86%, 93% 100%, 88% 82%, 82% 98%, 14% 100%, 8% 84%, 3% 98%, 1% 70%);
+}
+
+.archive::after {
+  top: -0.55rem;
+  left: 26%;
+  width: 46%;
+  rotate: -5deg;
+}
+
+.workshop::after {
+  top: -0.4rem;
+  right: 8%;
+  width: 22%;
+  rotate: 7deg;
+}
+
+/* A wide stage photograph: the performance itself. */
+.stage {
+  --tilt: -1.8deg;
+  --tilt-from: -7deg;
+  --from: 9% -6%;
+  --edge: polygon(0 3%, 6% 0, 14% 2.5%, 27% 0.5%, 41% 3%, 55% 0, 68% 2%, 83% 0.5%, 100% 2.5%, 98.5% 22%, 100% 47%, 98% 71%, 100% 97%, 87% 99%, 74% 96.5%, 60% 100%, 46% 97%, 31% 99.5%, 17% 96.5%, 6% 100%, 0 97%, 1.5% 72%, 0 49%, 2% 24%);
+  top: 0;
+  left: 10%;
+  width: 90%;
+  height: 52%;
+}
+
+/* The archival portrait: remembrance. */
+.archive {
+  --tilt: 3.2deg;
+  --tilt-from: 12deg;
+  --from: -16% 12%;
+  --edge: polygon(2% 1%, 20% 0, 38% 2%, 61% 0, 79% 1.5%, 99% 0, 100% 18%, 97.5% 39%, 100% 58%, 98% 79%, 100% 100%, 77% 98%, 58% 100%, 36% 97.5%, 17% 100%, 0 98.5%, 2% 77%, 0 54%, 2.5% 33%, 0 15%);
+  z-index: 2;
+  top: 30%;
+  left: 0;
+  width: 40%;
+  height: 46%;
+}
+
+/* The workshop: drum, masks and robes — the community, renewal. */
+.workshop {
+  --tilt: -1deg;
+  --tilt-from: -9deg;
+  --from: 14% 16%;
+  --edge: polygon(0 1.5%, 11% 0, 23% 3%, 36% 0.5%, 50% 2.5%, 64% 0, 77% 2%, 90% 0, 100% 3%, 98% 27%, 100% 52%, 98.5% 76%, 100% 99%, 85% 97%, 71% 100%, 56% 97.5%, 43% 100%, 29% 96.5%, 15% 99.5%, 0 97%, 2% 74%, 0 50%, 1.5% 25%);
+  z-index: 1;
+  top: 50%;
+  left: 32%;
+  width: 66%;
+  height: 46%;
+}
+
+/* Assembly: while motion is allowed and the piece has not been released yet
+   (RouteEffects adds .is-in to the frame, or the boot script's .reveal-all
+   after 4 s), each print lies scattered and over-tilted; it then settles,
+   staggered by --delay. Photos stay visible throughout (no opacity), so the
+   largest paint is never held back. Without :has() support the selector is
+   dropped and the collage simply appears composed. */
+:global(html.motion-ok) .piece {
+  transition:
+    rotate var(--dur-4) var(--ease-torn) var(--delay, 0ms),
+    translate var(--dur-4) var(--ease-torn) var(--delay, 0ms);
+}
+
+:global(html.motion-ok:not(.reveal-all)) .piece:not(:has(> :global(.is-in))) {
+  rotate: var(--tilt-from);
+  translate: var(--from);
+}
+
+/* ---------- The headline ---------- */
+
+.title {
+  position: relative;
+  z-index: 3;
+  container-type: inline-size;
+  margin-top: calc(-1 * clamp(3.5rem, 15vw, 7rem));
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: min(9.5rem, calc(100cqi / var(--title-ems, 6)));
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-wrap: nowrap;
+  max-width: none;
+}
+
+.lead1,
+.lead2 {
+  font-family: var(--font-text);
+  font-size: max(1.15rem, 0.22em);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--fg-muted);
+  padding-inline: 0.1em;
+}
+
+.lead1 {
+  align-self: flex-start;
+  background: var(--bg);
+}
+
+.lead2 {
+  align-self: flex-end;
+  margin-top: 0.3em;
+  margin-bottom: 0.06em;
+  background: var(--bg);
+}
+
+/* The past: thin, kept close, on a strip cut from the stage itself — invisible
+   on the maroon ground, a torn band where it crosses a photograph. */
+.past {
+  position: relative;
+  isolation: isolate;
+  align-self: flex-start;
+  padding: 0.02em 0.05em 0.04em;
+  font-weight: 230;
+  color: var(--fg-muted);
+}
+
+.past::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  clip-path: polygon(0 4%, 9% 0, 23% 5%, 41% 1%, 60% 4%, 79% 0, 100% 3%, 99% 50%, 100% 97%, 82% 100%, 64% 96%, 45% 100%, 26% 96.5%, 10% 100%, 0 97%, 1% 52%);
+}
+
+/* The future: heavy, on pale-lime paper, pasted slightly askew. */
+.future {
+  position: relative;
+  isolation: isolate;
+  align-self: flex-end;
+  padding: 0.05em 0.15em 0.09em;
+  font-weight: 860;
+  color: var(--ink);
+  rotate: -1.4deg;
+}
+
+.future::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--lime-pop);
+  clip-path: polygon(1% 6%, 8% 0, 17% 4%, 29% 0.5%, 42% 5%, 55% 1%, 68% 4.5%, 81% 0, 92% 3.5%, 100% 0, 98.5% 34%, 100% 66%, 99% 100%, 88% 95.5%, 76% 100%, 63% 96%, 50% 99.5%, 37% 95%, 24% 100%, 12% 96.5%, 0 100%, 1.5% 64%, 0 33%);
+}
+
+/* Arrival: the lime strip is pasted down left to right, and the word gains its
+   weight on it ("the Power of Renewal"). */
+@keyframes paste {
+  from {
+    scale: 0 1;
+  }
+}
+
+@keyframes embolden {
+  from {
+    font-weight: 160;
+    color: var(--fg);
+  }
+}
+
+:global(html.motion-ok) .future {
+  animation: embolden 1100ms var(--ease-torn) 650ms both;
+}
+
+:global(html.motion-ok) .future::before {
+  transform-origin: 0 50%;
+  animation: paste 800ms var(--ease-torn) 520ms both;
+}
+
+.actions {
+  position: relative;
+  z-index: 3;
+}
+
+/* ---------- Next on stage: a ticket stub pinned to the collage ---------- */
+
+.next {
+  /* Light-paper roles inside the dark stage. */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --accent: var(--terracotta);
+  --focus: var(--terracotta);
+  --btn-bg: var(--terracotta);
+  --btn-fg: var(--paper);
+  --btn-hover-bg: var(--maroon);
+  --btn-hover-fg: var(--paper);
+  --rule: rgb(24 22 22 / 0.35);
+  position: relative;
+  z-index: 3;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--s-3) var(--s-4);
+  max-width: 24rem;
+  padding: var(--s-5) var(--s-5) var(--s-5) var(--s-6);
+  color: var(--fg);
+  rotate: -0.8deg;
+  filter: drop-shadow(0 0.8rem 1rem rgb(24 22 22 / 0.45));
+}
+
+/* The paper is painted underneath so the torn outline never clips the focus ring. */
+.next::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 1.8% 94%, 0 88%, 2.2% 81%, 0.4% 74%, 2% 66%, 0 59%, 1.6% 51%, 0.2% 43%, 2.4% 35%, 0 27%, 1.8% 19%, 0.3% 12%, 2% 5%);
+}
+
+/* Perforation of the stub. */
+.next::after {
+  content: '';
+  position: absolute;
+  top: var(--s-3);
+  bottom: var(--s-3);
+  left: var(--s-4);
+  border-left: 2px dashed var(--rule);
+}
+
+.nextLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  color: var(--accent);
+}
+
+/* "13 Dec 2026" stacks word by word, like the date block on a stub. */
+.nextDate {
+  width: min-content;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+  font-weight: 820;
+  line-height: 0.92;
+}
+
+.nextWhat {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.nextTitle {
+  font-family: var(--font-ui);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.nextPlace {
+  color: var(--fg-muted);
+  font-size: var(--fs-sm);
+}
+
+.nextLabel,
+.nextCta {
+  grid-column: 1 / -1;
+}
+
+.nextCta {
+  justify-self: start;
+}
+
+/* ---------- Desktop: headline across the collage, ticket pinned bottom right ---------- */
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    column-gap: var(--col-gap);
+    row-gap: var(--s-6);
+    min-height: calc(100svh - var(--header-h) - var(--tear));
+    padding-block: var(--s-6);
+  }
+
+  .eyebrow {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+  }
+
+  .collage {
+    grid-column: 6 / -1;
+    grid-row: 1 / -1;
+    height: auto;
+    min-height: 36rem;
+    margin-right: calc(-1 * var(--gutter));
+  }
+
+  .stage {
+    top: 2%;
+    left: 16%;
+    width: 84%;
+    height: 46%;
+  }
+
+  .archive {
+    top: 27%;
+    width: 34%;
+    height: 42%;
+  }
+
+  .workshop {
+    top: 49%;
+    left: 24%;
+    width: 70%;
+    height: 37%;
+  }
+
+  .title {
+    grid-column: 1 / span 10;
+    grid-row: 2;
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .actions {
+    grid-column: 1 / span 5;
+    grid-row: 3;
+    align-self: end;
+  }
+
+  .next {
+    grid-column: 9 / -1;
+    grid-row: 3;
+    align-self: end;
+    justify-self: end;
+    rotate: 1.2deg;
+  }
+}
+
+/* ==========================================================================
+   The tear — hero → next section.
+   The section after the hero (class .heroNext) is pulled up by --tear so its
+   own background runs underneath the hero's ripped bottom edge. Between the
+   two, painted by .heroNext::before, lies a second torn sheet of terracotta:
+   it fills the hero's notches and shows its own ragged edge on the paper
+   below — maroon / terracotta / paper, like layered posters on a wall.
+
+   Where scroll-driven animations exist and motion is allowed, the terracotta
+   sheet starts tucked up behind the hero (the paper of the next section
+   showing through the tear) and slides out as the boundary scrolls up the
+   viewport. Elsewhere — and always under reduced motion — it simply sits in
+   that final position: same torn shapes, no movement.
+   ========================================================================== */
+
+.heroNext {
+  --tear: clamp(1.5rem, 0.9rem + 2.6vw, 3.5rem);
+  position: relative;
+  margin-top: calc(-1 * var(--tear));
+  padding-block: calc(var(--section) + var(--tear)) var(--section);
+  view-timeline: --hero-tear block;
+}
+
+.heroNext::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: calc(var(--tear) * 2);
+  background: var(--terracotta);
+  pointer-events: none;
+  /* Top edge hidden behind the hero; bottom edge ragged between 0.1 and 1 tear below it. */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 89.38%,
+    99.01% 93.03%,
+    97.69% 92.8%,
+    95% 88.16%,
+    94.09% 83%,
+    90.95% 86.71%,
+    89.91% 85.28%,
+    88.93% 84.58%,
+    87.12% 87.37%,
+    85.75% 89.7%,
+    84.78% 91.36%,
+    83.28% 86.58%,
+    80.46% 86.22%,
+    78.85% 89.81%,
+    77.4% 87.44%,
+    74.83% 75.62%,
+    72.53% 70.82%,
+    70.6% 75.52%,
+    69.37% 73.76%,
+    67.5% 76.06%,
+    65.92% 77.06%,
+    64.02% 76.22%,
+    62.37% 74.54%,
+    60.96% 77.05%,
+    59.14% 73.29%,
+    57.07% 71.93%,
+    54.32% 63.46%,
+    52.27% 59.71%,
+    51.08% 59.35%,
+    48.3% 63.22%,
+    45.39% 66.23%,
+    43.05% 67.62%,
+    40.12% 71.4%,
+    38.57% 66.41%,
+    35.82% 64.23%,
+    34.33% 64.73%,
+    31.35% 67.42%,
+    29.76% 68.77%,
+    28.01% 70.3%,
+    25.88% 78.43%,
+    22.98% 81.7%,
+    20.05% 78.89%,
+    18.43% 81.13%,
+    16.39% 78.8%,
+    14.42% 80.36%,
+    12.31% 75.9%,
+    10.32% 85.62%,
+    7.33% 86.83%,
+    5.99% 92.82%,
+    4.98% 89.84%,
+    2.08% 91.93%,
+    0.06% 91.72%,
+    0 80%
+  );
+}
+
+@keyframes unfurl {
+  from {
+    translate: 0 calc(var(--tear) * -1.05);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  :global(html.motion-ok) .heroNext::before {
+    animation: unfurl linear both;
+    animation-timeline: --hero-tear;
+    animation-range: entry 4% entry 60%;
+  }
+}

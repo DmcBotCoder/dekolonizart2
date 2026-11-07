@@ -1,0 +1,295 @@
+/* Home page sections after the opening. The opening itself and the torn
+   boundary into "Should we all have a voice?" live in components/ui/Hero. */
+
+/* ==========================================================================
+   Should we all have a voice?
+   ========================================================================== */
+
+.voice {
+  row-gap: var(--s-6);
+}
+
+.voiceTitle {
+  grid-column: 1 / -1;
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.75rem);
+  font-weight: 800;
+}
+
+.voiceText {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--measure);
+}
+
+.dare {
+  padding-left: var(--s-5);
+  border-left: 4px solid var(--accent-display);
+  font-size: var(--fs-lead);
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.voiceText :global(.textlink) {
+  justify-self: start;
+}
+
+@media (min-width: 1024px) {
+  .voiceTitle {
+    grid-column: 1 / span 5;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    align-self: start;
+  }
+
+  .voiceText {
+    grid-column: 7 / -1;
+  }
+}
+
+/* ==========================================================================
+   Offers — three spreads with different proportions, like a magazine run.
+   ========================================================================== */
+
+.offers {
+  display: grid;
+  gap: var(--section-tight);
+}
+
+.offer {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+}
+
+.offerImage {
+  aspect-ratio: 4 / 3;
+}
+
+.offerText {
+  display: grid;
+  gap: var(--s-3);
+  align-content: end;
+  max-width: 34rem;
+}
+
+.offerText h3 {
+  font-size: clamp(1.75rem, 1.3rem + 1.9vw, 3rem);
+  font-weight: 800;
+  line-height: 0.98;
+}
+
+.offerLink {
+  text-decoration: none;
+}
+
+/* The whole spread is the link target. */
+.offerLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.offerLink:focus-visible {
+  outline: none;
+}
+
+.offer:has(.offerLink:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 6px;
+}
+
+.discover {
+  justify-self: start;
+  font-family: var(--font-ui);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-thickness var(--dur-1) var(--ease-out);
+}
+
+.offer:hover .discover {
+  text-decoration-thickness: 4px;
+}
+
+@media (min-width: 1024px) {
+  .offer {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    align-items: end;
+  }
+
+  .offer0 .offerImage {
+    grid-column: 1 / span 7;
+  }
+
+  .offer0 .offerText {
+    grid-column: 9 / -1;
+  }
+
+  .offer1 .offerImage {
+    grid-column: 5 / -1;
+    grid-row: 1;
+    aspect-ratio: 16 / 10;
+  }
+
+  .offer1 .offerText {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .offer2 .offerImage {
+    grid-column: 2 / -1;
+    grid-row: 1;
+    aspect-ratio: 21 / 9;
+  }
+
+  .offer2 .offerText {
+    grid-column: 1 / span 6;
+    grid-row: 2;
+    margin-top: calc(-1 * var(--s-8));
+    padding: var(--s-5) var(--s-5) 0 0;
+    background: var(--bg);
+    position: relative;
+  }
+}
+
+/* ==========================================================================
+   Community & partners
+   ========================================================================== */
+
+.join {
+  row-gap: var(--s-6);
+}
+
+.joinTitle {
+  grid-column: 1 / -1;
+  max-width: 11ch;
+  font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.75rem);
+  font-weight: 800;
+}
+
+.joinText {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--measure);
+}
+
+.partners {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+
+.partnersTitle {
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  color: var(--fg-muted);
+}
+
+.partners ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partners a {
+  display: block;
+  background: var(--paper);
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.partners a:hover {
+  transform: translateY(-3px);
+}
+
+.partners img {
+  width: 6.5rem;
+  height: 6.5rem;
+  object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .joinTitle {
+    grid-column: 1 / span 5;
+  }
+
+  .joinText {
+    grid-column: 7 / -1;
+  }
+
+  .partners {
+    grid-column: 7 / -1;
+  }
+}
+
+/* ==========================================================================
+   Support — portrait in a torn frame, on terracotta, before the footer.
+   ========================================================================== */
+
+.support {
+  padding-block: var(--section);
+}
+
+.support:focus {
+  outline: none;
+}
+
+.supportGrid {
+  display: grid;
+  gap: var(--s-7) var(--col-gap);
+}
+
+.supportImage {
+  aspect-ratio: 4 / 3;
+  margin-inline: calc(-1 * var(--gutter));
+}
+
+.supportText {
+  display: grid;
+  gap: var(--s-5);
+  align-content: center;
+  max-width: 40rem;
+}
+
+.supportText h2 {
+  font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.75rem);
+  font-weight: 800;
+  max-width: 12ch;
+}
+
+@media (min-width: 768px) {
+  .supportImage {
+    margin-inline: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .supportGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .supportImage {
+    grid-column: 1 / span 5;
+    aspect-ratio: 4 / 5;
+  }
+
+  .supportText {
+    grid-column: 7 / -1;
+  }
+}
