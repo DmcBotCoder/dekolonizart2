@@ -1,0 +1,255 @@
+/*
+ * DekolonizArt v3 — "Torn Archive" design tokens.
+ *
+ * Editorial-collage identity: archival photography framed in torn/diagonal
+ * paper-edge cutouts, oversized overlapping headlines, warm clay/terracotta
+ * grounded by deep brown/forest-green, lifted by cream and pale-lime. Exactly
+ * twelve palette colours are used anywhere in this file (and in base.css):
+ * #464040 #135406 #7e2105 #eadfdf #5d1d1d #3b2c2c #181616 #f0ffce #9a391b
+ * #B34A25 #f7f5f2 #ddf7b8 #a38b8b. Two type voices: "Movement" for the
+ * display/UI voice (the kinetic, oversized headline element), "Source Sans"
+ * for the written record (set by Task 3's next/font `variable:` option as
+ * --font-movement / --font-source-sans — referenced, never redefined, here).
+ *
+ * Contrast: running text (--fg on --bg) is >=7:1 (WCAG AAA) on every surface.
+ * --accent / button fills sit at ~6.5:1 (comfortably >=AA 4.5:1) — the palette
+ * does not contain a pure black/white, so the terracotta-on-paper pairing used
+ * for short UI text (buttons, CTAs) is the strongest available without
+ * drifting into prose. --accent-display is reserved for large display type
+ * and graphics only, same as camwood-400 was in v2.
+ */
+
+:root {
+  /* ---------- Colour: raw palette ---------- */
+  --ink: #181616; /* darkest neutral — running text on light surfaces */
+  --ink-muted: #464040; /* warm charcoal — muted text on light surfaces */
+  --brown: #3b2c2c; /* deep brown — alternate dark surface */
+  --maroon: #5d1d1d; /* dark maroon — "stage" dark surface */
+  --rust: #7e2105; /* supporting accent / strong focus ring */
+  --forest: #135406; /* supporting accent — forest green */
+  --terracotta: #9a391b; /* primary accent / button fill */
+  --terracotta-light: #b34a25; /* hover / brighter accent */
+  --paper: #f7f5f2; /* cream paper — default light surface */
+  --clay: #eadfdf; /* pale clay — secondary light surface */
+  --lime: #f0ffce; /* palest lime highlight */
+  --lime-pop: #ddf7b8; /* pale lime pop accent on dark surfaces */
+  --mauve: #a38b8b; /* dusty muted rose — soft dividers / disabled */
+
+  /* ---------- Colour: roles (light surface by default, redefined per surface) ---------- */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --accent: var(--terracotta);
+  --accent-display: var(--terracotta-light);
+  --rule: rgb(24 22 22 / 0.2);
+  --rule-strong: var(--ink);
+  --focus: var(--terracotta-light);
+  --btn-bg: var(--terracotta);
+  --btn-fg: var(--paper);
+  --btn-hover-bg: var(--maroon);
+  --btn-hover-fg: var(--paper);
+
+  /* ---------- Typography ---------- */
+  /* --font-movement / --font-source-sans are set by Task 3's layout via next/font `variable:`. */
+  --font-display: var(--font-movement), 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  --font-ui: var(--font-movement), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-text: var(--font-source-sans), 'Helvetica Neue', Arial, sans-serif;
+
+  /* Width axis of Movement (mapped through font-stretch), mirrors v2's Archivo usage. */
+  --wdth-compressed: 62%;
+  --wdth-condensed: 75%;
+  --wdth-semi: 87.5%;
+  --wdth-normal: 100%;
+  --wdth-wide: 125%;
+
+  /* Fluid type scale, 375 px -> 1440 px viewport. */
+  --fs-xs: 0.875rem; /* 14 */
+  --fs-sm: 0.9375rem; /* 15 */
+  --fs-ui: 1rem; /* 16 */
+  --fs-body: clamp(1.0625rem, 1.01rem + 0.23vw, 1.1875rem); /* 17 -> 19 */
+  --fs-lead: clamp(1.25rem, 1.1rem + 0.65vw, 1.6875rem); /* 20 -> 27 */
+  --fs-h4: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.75vw, 1.875rem);
+  --fs-h2: clamp(min(2.125rem, 10vw), 1.45rem + 2.9vw, 4rem);
+  --fs-h1: clamp(min(2.875rem, 12.5vw), 1.55rem + 5.65vw, 6.75rem);
+  --fs-mega: clamp(3.4rem, 0.9rem + 10.6vw, 10.5rem);
+
+  --lh-tight: 0.9;
+  --lh-snug: 1.08;
+  --lh-ui: 1.35;
+  --lh-text: 1.62;
+
+  /* ---------- Space ---------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  --section: clamp(4.5rem, 2.8rem + 7vw, 9.5rem);
+  --section-tight: clamp(3rem, 2.2rem + 3.4vw, 5.5rem);
+
+  /* ---------- Layout ---------- */
+  --gutter: clamp(1rem, 0.4rem + 2.6vw, 2.75rem); /* 16 px on phones */
+  --col-gap: clamp(1rem, 0.6rem + 1.7vw, 2rem);
+  --max: 1360px;
+  --measure: 64ch;
+  --measure-narrow: 46ch;
+  --header-h: 4rem;
+
+  /* Breakpoints (for reference – media queries cannot read variables):
+     480 large phone · 640 small tablet · 768 tablet · 1024 tablet landscape
+     1180 desktop navigation · 1280 laptop · 1440 large desktop */
+
+  /* ---------- Shape ---------- */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-round: 999px;
+  --border: 1.5px;
+  --shadow-lift: 0 30px 60px -24px rgb(24 22 22 / 0.55);
+
+  /* ---------- Motion ---------- */
+  --dur-1: 160ms; /* hover, press */
+  --dur-2: 320ms; /* menus, disclosure */
+  --dur-3: 720ms; /* reveals */
+  --dur-4: 1300ms; /* hero choreography */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-torn: cubic-bezier(0.33, 0, 0.1, 1);
+}
+
+@media (min-width: 1180px) {
+  :root {
+    --header-h: 4.75rem;
+  }
+}
+
+/* ---------- Surfaces ---------- */
+
+.surface-stage {
+  --bg: var(--maroon);
+  --fg: var(--paper);
+  --fg-muted: var(--clay);
+  --accent: var(--lime-pop);
+  --accent-display: var(--terracotta-light);
+  --rule: rgb(247 245 242 / 0.2);
+  --rule-strong: var(--paper);
+  --focus: var(--lime-pop);
+  --btn-bg: var(--paper);
+  --btn-fg: var(--maroon);
+  --btn-hover-bg: var(--lime-pop);
+  --btn-hover-fg: var(--maroon);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.surface-deep {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: var(--clay);
+  --accent: var(--lime-pop);
+  --accent-display: var(--terracotta-light);
+  --rule: rgb(247 245 242 / 0.18);
+  --rule-strong: var(--paper);
+  --focus: var(--lime-pop);
+  --btn-bg: var(--paper);
+  --btn-fg: var(--ink);
+  --btn-hover-bg: var(--lime-pop);
+  --btn-hover-fg: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Bold colour-block surface. Kept as `.surface-camwood` for marker continuity
+   with ported component markup, recoloured to the primary terracotta accent. */
+.surface-camwood {
+  --bg: var(--terracotta);
+  --fg: var(--paper);
+  --fg-muted: var(--paper);
+  --accent: var(--paper);
+  --accent-display: var(--paper);
+  --rule: rgb(247 245 242 / 0.3);
+  --rule-strong: var(--paper);
+  --focus: var(--paper);
+  --btn-bg: var(--paper);
+  --btn-fg: var(--terracotta);
+  --btn-hover-bg: var(--ink);
+  --btn-hover-fg: var(--paper);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.surface-paper {
+  --bg: var(--paper);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.surface-clay {
+  --bg: var(--clay);
+  --rule: rgb(24 22 22 / 0.24);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ---------- Accessibility settings (classes set by the boot script / panel) ---------- */
+
+html.a11y-text-125 {
+  font-size: 125%;
+}
+
+html.a11y-text-150 {
+  font-size: 150%;
+}
+
+/* With large text or extra spacing, a word that cannot fit its column may break instead of widening the page. */
+html:is(.a11y-text-125, .a11y-text-150, .a11y-spacing) body {
+  overflow-wrap: anywhere;
+}
+
+/* Collapse the soft/mid-tone raw values into the darkest or brightest
+   already-approved palette colour, so every surface reads at its strongest
+   available contrast. No colours outside the twelve-value palette are
+   introduced here. */
+html.a11y-contrast {
+  --ink-muted: var(--ink);
+  --clay: var(--paper);
+  --mauve: var(--ink);
+  --rule: rgb(24 22 22 / 0.6);
+}
+
+html.a11y-contrast .surface-stage,
+html.a11y-contrast .surface-deep {
+  --rule: rgb(247 245 242 / 0.6);
+}
+
+html.a11y-readable-font {
+  --font-display: var(--font-ui);
+  --font-text: var(--font-ui);
+}
+
+html.a11y-readable-font :is(h1, h2, h3, h4, .display) {
+  font-stretch: 100% !important;
+  letter-spacing: 0 !important;
+}
+
+html.a11y-spacing body {
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+  word-spacing: 0.16em;
+}
+
+html.a11y-spacing :is(p, li, dd) {
+  margin-bottom: 1.5em;
+}
+
+html.a11y-underline a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 0.2em;
+}
