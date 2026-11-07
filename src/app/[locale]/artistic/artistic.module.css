@@ -1,0 +1,187 @@
+.intro {
+  row-gap: var(--s-6);
+}
+
+.introTitle {
+  grid-column: 1 / -1;
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.75rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+}
+
+.introText {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--measure);
+}
+
+@media (min-width: 1024px) {
+  .introTitle {
+    grid-column: 1 / span 5;
+  }
+
+  .introText {
+    grid-column: 7 / -1;
+  }
+}
+
+/* ---------- Band ---------- */
+
+.band {
+  margin: 0;
+  padding-bottom: var(--s-6);
+}
+
+.bandImage {
+  aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 900px) {
+  .bandImage {
+    aspect-ratio: 21 / 8;
+  }
+}
+
+.band figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  padding-top: var(--s-3);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  color: var(--fg-muted);
+}
+
+.band figcaption span {
+  font-weight: 650;
+  color: var(--fg);
+}
+
+/* ---------- Principles ---------- */
+
+.principles {
+  display: grid;
+  gap: var(--s-7) var(--col-gap);
+}
+
+@media (min-width: 900px) {
+  .principles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.principle {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  padding-top: var(--s-5);
+  border-top: 6px solid var(--ink);
+}
+
+.principle:nth-child(2) {
+  border-top-color: var(--accent);
+}
+
+.principle h2 {
+  font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+  line-height: 0.98;
+}
+
+/* ---------- Past workshops ---------- */
+
+.past {
+  display: grid;
+  gap: var(--section-tight);
+}
+
+.workshop {
+  display: grid;
+  gap: var(--s-5) var(--col-gap);
+}
+
+.workshopImage {
+  aspect-ratio: 4 / 3;
+}
+
+.workshopText {
+  display: grid;
+  gap: var(--s-3);
+  align-content: end;
+  max-width: 34rem;
+}
+
+.workshopText h3 {
+  font-size: clamp(1.8rem, 1.3rem + 2vw, 3rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+}
+
+.place {
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  color: var(--accent);
+}
+
+@media (min-width: 900px) {
+  .workshop {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+  }
+
+  .flip {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .flip .workshopImage {
+    order: 2;
+  }
+}
+
+/* ---------- Theater & Geschichte ---------- */
+
+.youthFacts {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--border) solid var(--rule-strong);
+}
+
+.youthFacts li {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--s-3) 0 var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-ui);
+}
+
+.youthFacts strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.youthFacts span {
+  font-size: var(--fs-sm);
+  color: var(--fg-muted);
+}
+
+/* ---------- CTA ---------- */
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.cta h2 {
+  font-size: clamp(2.4rem, 1.4rem + 4vw, 5rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+}

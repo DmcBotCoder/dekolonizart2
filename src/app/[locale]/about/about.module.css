@@ -1,0 +1,166 @@
+.manifest {
+  row-gap: var(--s-7);
+}
+
+/* "Remembrance / into renewal." – the same width shift as the home headline. */
+.manifestTitle {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2.6rem, 1.2rem + 6vw, 6.5rem);
+  font-weight: 800;
+  line-height: 0.9;
+}
+
+.past {
+  font-stretch: var(--wdth-compressed);
+  color: var(--ink-muted);
+}
+
+.future {
+  font-stretch: 118%;
+}
+
+.manifestText {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--measure);
+}
+
+.strong {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 760;
+  font-stretch: var(--wdth-semi);
+  line-height: 1.15;
+}
+
+.sig {
+  display: grid;
+  gap: 0.25rem;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+  font-style: italic;
+}
+
+.sig span {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 760;
+  font-stretch: var(--wdth-condensed);
+}
+
+@media (min-width: 1024px) {
+  .manifestTitle {
+    grid-column: 1 / span 6;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    align-self: start;
+  }
+
+  .manifestText {
+    grid-column: 7 / -1;
+    padding-top: var(--s-4);
+  }
+}
+
+/* ---------- Chapters ---------- */
+
+.chapters {
+  display: grid;
+  gap: 0 var(--col-gap);
+}
+
+.chapter {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  padding-block: var(--s-6) var(--s-7);
+  border-top: var(--border) solid var(--rule-strong);
+}
+
+.chapter h2 {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.4rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+}
+
+.chapterText {
+  display: grid;
+  gap: var(--s-4);
+  max-width: 40rem;
+}
+
+.chapterText p:first-child {
+  font-size: var(--fs-lead);
+  line-height: 1.42;
+}
+
+@media (min-width: 900px) {
+  .chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chapter:first-child {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--col-gap);
+  }
+}
+
+/* ---------- Values ---------- */
+
+.valuesKicker {
+  margin-bottom: var(--s-6);
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 650;
+  font-stretch: var(--wdth-normal);
+}
+
+.ubuntu {
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: var(--s-8);
+}
+
+.ubuntu h3 {
+  font-size: clamp(min(4rem, 15vw), 1.5rem + 11vw, 11rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-wide);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+}
+
+.ubuntuText {
+  max-width: 44rem;
+  font-size: var(--fs-lead);
+  line-height: 1.42;
+}
+
+.values {
+  display: grid;
+  gap: var(--s-6) var(--col-gap);
+  padding-top: var(--s-6);
+  border-top: var(--border) solid var(--rule-strong);
+}
+
+@media (min-width: 900px) {
+  .values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.value {
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+}
+
+.value h3 {
+  font-size: var(--fs-h3);
+  font-stretch: var(--wdth-condensed);
+  font-weight: 780;
+}

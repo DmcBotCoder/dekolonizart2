@@ -1,0 +1,76 @@
+.triptych {
+  display: grid;
+  gap: var(--s-8) var(--col-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: var(--s-4);
+  align-content: start;
+}
+
+.image {
+  aspect-ratio: 4 / 3;
+  margin-bottom: var(--s-2);
+}
+
+.panel h3 {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+  line-height: 0.98;
+}
+
+.panel :global(.textlink) {
+  justify-self: start;
+}
+
+@media (min-width: 900px) {
+  .triptych {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .image {
+    aspect-ratio: 3 / 4.2;
+  }
+
+  /* The middle panel steps down – the three read as a moving line, not a row of cards. */
+  .panel:nth-child(2) {
+    margin-top: var(--s-9);
+  }
+
+  .panel:nth-child(3) {
+    margin-top: var(--s-6);
+  }
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6) var(--col-gap);
+}
+
+@media (min-width: 1024px) {
+  .faqGrid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.cta h2 {
+  font-size: clamp(2.4rem, 1.4rem + 4vw, 5rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+}

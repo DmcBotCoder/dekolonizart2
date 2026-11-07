@@ -1,0 +1,63 @@
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The line runs through the years like a stage edge. */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(var(--accent-display), var(--accent-display)) top / 100% 30% no-repeat, var(--rule);
+}
+
+.item {
+  display: grid;
+  gap: var(--s-3) var(--col-gap);
+  padding: var(--s-6) 0 var(--s-7) var(--s-6);
+  border-bottom: 1px solid var(--rule);
+}
+
+.year {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 2rem + 9vw, 10rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-compressed);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+}
+
+:global(html.a11y-contrast) .year {
+  color: var(--ink);
+}
+
+.body {
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+  max-width: var(--measure);
+}
+
+.body h3 {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+  font-weight: 780;
+  font-stretch: var(--wdth-condensed);
+}
+
+@media (min-width: 900px) {
+  .item {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+    padding-left: var(--s-7);
+  }
+
+  .body {
+    padding-top: var(--s-4);
+  }
+}
