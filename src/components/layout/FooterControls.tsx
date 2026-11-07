@@ -9,32 +9,53 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 interface NewsletterLabels {
   heading: string;
   emailLabel: string;
+  consent: string;
   send: string;
+  sending: string;
   thanks: string;
   errEmpty: string;
   errInvalid: string;
+  errConsent: string;
+  errUnavailable: string;
+  errProvider: string;
 }
 
-/**
- * Newsletter sign-up. As in version 1/2 it only validates: no mailing service
- * is connected yet (see the privacy policy), nothing is sent or stored.
- */
 export function NewsletterForm({ labels }: { labels: NewsletterLabels }) {
   const [value, setValue] = useState('');
+  const [consent, setConsent] = useState(false);
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
   const id = useId();
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     setDone(false);
+    setError('');
     const email = value.trim();
     if (!email) setError(labels.errEmpty);
     else if (!EMAIL.test(email)) setError(labels.errInvalid);
+    else if (!consent) setError(labels.errConsent);
     else {
-      setError('');
-      setDone(true);
-      setValue('');
+      setBusy(true);
+      try {
+        const response = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email, consent }),
+        });
+        if (response.ok) {
+          setDone(true);
+          setValue('');
+          setConsent(false);
+        } else {
+          setError(response.status === 503 ? labels.errUnavailable : labels.errProvider);
+        }
+      } catch {
+        setError(labels.errUnavailable);
+      } finally {
+        setBusy(false);
+      }
       return;
     }
     document.getElementById(`${id}-email`)?.focus();
@@ -60,9 +81,13 @@ export function NewsletterForm({ labels }: { labels: NewsletterLabels }) {
           value={value}
           onChange={(event) => setValue(event.target.value)}
         />
-        <button className="btn" type="submit">
-          {labels.send}
+        <button className="btn" type="submit" disabled={busy}>
+          {busy ? labels.sending : labels.send}
         </button>
+        <label className={styles.consent}>
+          <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} />
+          <span>{labels.consent}</span>
+        </label>
       </form>
       {error && (
         <p id={`${id}-err`} className={styles.err}>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { CurtainImage } from '@/components/ui/CurtainImage';
 import { Faq } from '@/components/ui/Faq';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { SectionHead } from '@/components/ui/SectionHead';
@@ -37,7 +37,7 @@ export default async function ServicesPage() {
         intro={s.intro}
       />
 
-      {/* Three curtain gaps side by side – one discipline in each. */}
+      {/* Numbered editorial bands – one discipline in each. */}
       <section className="section" aria-labelledby="svc-title">
         <div className="container">
           <h2 id="svc-title" className="sr-only">
@@ -45,13 +45,25 @@ export default async function ServicesPage() {
           </h2>
           <ul className={styles.triptych}>
             {resolveOffers(t).map((offer, i) => (
-              <li key={offer.id} className={styles.panel}>
-                <CurtainImage className={styles.image} image={offer.image} sizes="(min-width: 900px) 55vw, 100vw" delay={i * 140} />
-                <h3>{offer.title}</h3>
-                <p>{offer.text}</p>
-                <Link href={l(offer.href)} className="textlink">
-                  {s.visit}
-                  <span className="sr-only">: {offer.title}</span>
+              <li key={offer.id}>
+                <Link href={l(offer.href)} className={`${styles.panel} ${styles[`panel${i}` as 'panel0']}`}>
+                  <span className={styles.number}>0{i + 1}</span>
+                  <span className={styles.image}>
+                    <Image
+                      src={offer.image.src}
+                      alt=""
+                      fill
+                      sizes="(min-width: 900px) 42vw, 100vw"
+                      style={{ objectPosition: offer.image.position }}
+                    />
+                  </span>
+                  <span className={styles.panelText}>
+                    <strong>{offer.title}</strong>
+                    <small>{offer.text}</small>
+                    <em>
+                      {s.visit} ↗<span className="sr-only">: {offer.title}</span>
+                    </em>
+                  </span>
                 </Link>
               </li>
             ))}

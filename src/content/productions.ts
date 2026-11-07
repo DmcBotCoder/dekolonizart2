@@ -1,7 +1,7 @@
 import type { Locale } from '@/i18n/config';
 import type { Messages } from '@/i18n/messages';
 import type { Artist } from './artists';
-import type { heroImages, posters } from './media';
+import type { heroImages, posters, ProductionMedia } from './media';
 
 export type ProductionSlug = keyof Messages['shows'];
 
@@ -14,6 +14,12 @@ export type EventCategory = 'theater' | 'workshop' | 'movement';
 /** Ticket providers the booking page can hand over to. */
 export const bookingProviders = { vibetix: 'Vibetix' } as const;
 
+/** VibeTix catalogue embed used by the all-events page. */
+export const vibetixEventListEmbed = {
+  embedId: 'vibetix-embed-d125b66f',
+  checkoutUrl: 'https://dekolonizart.vibetix.io/embed?embed=1&embedId=vibetix-embed-d125b66f',
+} as const;
+
 /**
  * Online ticketing for one production. Every "Book now" / "Reserve your seat"
  * button leads to the production's booking page (`bookingPath`), which sends
@@ -25,6 +31,11 @@ export interface Booking {
   url: `https://${string}` | null;
   /** `false` switches online booking off (e.g. sold out) without deleting the link. */
   enabled: boolean;
+  /** Optional provider-hosted checkout embed, supplied per event by VibeTix. */
+  embed?: {
+    embedId: string;
+    checkoutUrl: `https://${string}`;
+  };
 }
 
 /** Intro video shown on the production page between the plot and the cast. */
@@ -52,15 +63,17 @@ export interface Production {
   plot?: { lang: Locale; blocks: TextBlock[] };
   booking: Booking;
   introVideo?: IntroVideo;
+  /** Additional image, video or audio excerpts; absent media stays absent. */
+  media?: readonly ProductionMedia[];
 }
 
 /**
  * Theatre productions. Short texts and dates are translated in
  * `messages.shows`; the plot exists only in English (WordPress synopsis).
  *
- * Booking: paste the event's Vibetix link into `booking.url`. While it is
- * `null` the booking page says online booking is not available and offers
- * reservation by e-mail.
+ * Booking: paste the event's Vibetix link into `booking.url`, or configure the
+ * provider-supplied `booking.embed`. Without either one, the booking page
+ * offers reservation by e-mail.
  * Intro video: add `introVideo: { provider: 'youtube', url: '…' }`; without it
  * the Intro section is left out.
  */
@@ -78,7 +91,16 @@ export const productions: Production[] = [
       { artist: 'ngako-keuni', credit: 'author' },
       { artist: 'athanasios-karakantas', credit: 'composer' },
     ],
-    booking: { provider: 'vibetix', url: null, enabled: true },
+    booking: {
+      provider: 'vibetix',
+      url: null,
+      enabled: true,
+      embed: {
+        embedId: 'vibetix-embed-79aea2d7',
+        checkoutUrl:
+          'https://dekolonizart.vibetix.io/e/ns-stage-reading-r-douala-manga-bell-der-konig-der-sein-recht-wollte/embed?embed=1&embedId=vibetix-embed-79aea2d7',
+      },
+    },
     introVideo: { provider: 'youtube', url: 'https://youtu.be/tccCwcyiRk4' },
     plot: {
       lang: 'en',

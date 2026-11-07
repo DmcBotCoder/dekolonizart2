@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Programme } from '@/components/events/ProgrammeRow';
 import { Spotlight } from '@/components/events/Spotlight';
-import { CurtainImage } from '@/components/ui/CurtainImage';
 import { Hero, heroNext } from '@/components/ui/Hero';
 import { PosterText } from '@/components/ui/PosterText';
 import { SectionHead } from '@/components/ui/SectionHead';
@@ -128,20 +127,23 @@ export default async function HomePage() {
           <SectionHead id="offers-title" kicker={h.offersEyebrow} title={h.offersH} />
           <div className={styles.offers}>
             {offers.map((offer, i) => (
-              <article key={offer.id} className={`${styles.offer} ${styles[`offer${i}` as 'offer0']}`}>
-                <CurtainImage className={styles.offerImage} image={offer.image} sizes="(min-width: 768px) 80vw, 100vw" />
-                <div className={styles.offerText}>
-                  <h3>
-                    <Link href={l(offer.href)} className={styles.offerLink}>
-                      {offer.title}
-                    </Link>
-                  </h3>
-                  <p>{offer.text}</p>
-                  <span className={styles.discover} aria-hidden="true">
-                    {h.discover}
-                  </span>
-                </div>
-              </article>
+              <Link key={offer.id} href={l(offer.href)} className={`${styles.offer} ${styles[`offer${i}` as 'offer0']}`}>
+                <span className={styles.offerNumber}>0{i + 1}</span>
+                <span className={styles.offerImage}>
+                  <Image
+                    src={offer.image.src}
+                    alt=""
+                    fill
+                    sizes="(min-width: 900px) 42vw, 100vw"
+                    style={{ objectPosition: offer.image.position }}
+                  />
+                </span>
+                <span className={styles.offerText}>
+                  <strong>{offer.title}</strong>
+                  <small>{offer.text}</small>
+                  <em>{h.discover} ↗</em>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
@@ -174,7 +176,7 @@ export default async function HomePage() {
             <ul>
               {partners.map((partner) => (
                 <li key={partner.name}>
-                  <a href={partner.href} target="_blank" rel="noopener">
+                  <a href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.name} (${t.common.newTab})`}>
                     <Image
                       src={partner.logo.src}
                       alt={partner.name}
@@ -193,14 +195,19 @@ export default async function HomePage() {
       </section>
 
       {/* ---------- Support (target of every "Donation" button) ---------- */}
-      <section id="support" className={`surface-camwood ${styles.support}`} aria-labelledby="support-title" tabIndex={-1}>
-        <div className={`container ${styles.supportGrid}`}>
-          <CurtainImage className={styles.supportImage} image={{ ...closingPortrait, position: '62% 30%' }} sizes="(min-width: 1024px) 60vw, 100vw" />
-          <div className={styles.supportText}>
-            <h2 id="support-title">{h.supportH2.replace(/^\|\|\s*/, '')}</h2>
-            <p className="lead">{h.support2}</p>
-            <div className="actions">
-              <Link href={l('/contact')} className="btn">
+      <section id="support" className={styles.support} aria-labelledby="support-title" tabIndex={-1}>
+        <div className={styles.supportMedia} aria-hidden="true">
+          <Image className={styles.supportImg} src={closingPortrait.src} alt="" fill sizes="100vw" />
+        </div>
+        <div className={`container ${styles.supportInner}`}>
+          <h2 id="support-title" className={styles.supportLabel}>
+            <span aria-hidden="true">|| </span>
+            {h.supportH2.replace(/^\|\|\s*/, '')}
+          </h2>
+          <div className={styles.supportBody}>
+            <p>{h.support2}</p>
+            <div>
+              <Link href={l('/support')} className={`btn ${styles.supportBtn}`}>
                 {h.donate}
               </Link>
             </div>

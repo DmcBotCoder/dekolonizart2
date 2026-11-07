@@ -7,6 +7,7 @@ import { Initials } from '@/components/people/Initials';
 import { Faq } from '@/components/ui/Faq';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { PosterButton } from '@/components/ui/PosterButton';
+import { ProductionMedia } from '@/components/ui/ProductionMedia';
 import { ReadMore } from '@/components/ui/ReadMore';
 import { SectionHead } from '@/components/ui/SectionHead';
 import { SectionNav } from '@/components/ui/SectionNav';
@@ -189,6 +190,15 @@ export default async function ProductionPage({ params }: Props) {
                   fallbackLabel={t.production.watchOnYouTube}
                 />
               </section>
+            )}
+
+            {production.media && (
+              <ProductionMedia
+                items={production.media}
+                heading={t.production.mediaH}
+                videoLabel={t.production.watchOnYouTube}
+                audioLabel={t.production.audioLabel}
+              />
             )}
 
             {/* ---------- Cast ---------- */}

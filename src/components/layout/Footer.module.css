@@ -3,6 +3,12 @@
   border-top: 6px solid var(--terracotta);
 }
 
+/* The home support portrait already fades into the footer's ink surface.
+   Remove the accent rule at that seam so both sections read as one component. */
+:global(main:has(#support)) + .footer {
+  border-top: 0;
+}
+
 .top {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -126,6 +132,31 @@
 
 .form input:focus-visible {
   outline-offset: 4px;
+}
+
+.form:has(.consent) {
+  flex-wrap: wrap;
+  border-bottom: 0;
+}
+
+.consent {
+  display: flex;
+  flex: 0 0 100%;
+  gap: 0.55rem;
+  align-items: flex-start;
+  padding-top: var(--s-3);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--fg-muted);
+}
+
+.consent input {
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--accent-display);
 }
 
 .form :global(.btn) {

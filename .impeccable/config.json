@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles/base.css"
+        ],
+        "createdAt": "2026-11-07T06:56:48.711Z",
+        "reason": "Ported verbatim (selector names/structure, retokened only) from the already-shipped version-2/src/styles/base.css .doc .toc / .legal-warning / .legal-lang notice callouts, per the plan's explicit Global Constraint to preserve v2's base.css structure and selector names. Domain-appropriate left-border notice/TOC callout on legal and accessibility documents, not a new AI-invented card flourish."
+      }
+    ]
+  }
+}

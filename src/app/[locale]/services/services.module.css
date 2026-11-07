@@ -1,50 +1,113 @@
 .triptych {
   display: grid;
-  gap: var(--s-8) var(--col-gap);
+  gap: var(--s-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .panel {
+  position: relative;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: var(--s-4);
-  align-content: start;
+  grid-template-columns: 4rem minmax(10rem, 1fr) 2fr;
+  align-items: stretch;
+  min-height: clamp(13rem, 25vw, 24rem);
+  overflow: hidden;
+  padding: var(--s-4);
+  background: var(--clay);
+  text-decoration: none;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.panel:hover {
+  transform: translateX(var(--s-4));
+}
+
+.panel1 {
+  background: var(--lime);
+}
+
+.panel2 {
+  background: var(--terracotta);
+  color: var(--paper);
+}
+
+.number {
+  align-self: start;
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 800;
 }
 
 .image {
-  aspect-ratio: 4 / 3;
-  margin-bottom: var(--s-2);
+  position: relative;
+  align-self: stretch;
+  min-height: 12rem;
+  overflow: hidden;
 }
 
-.panel h3 {
-  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem);
-  font-weight: 800;
+.image img {
+  object-fit: cover;
+  filter: saturate(0.9);
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.panel:hover .image img,
+.panel:focus-visible .image img {
+  transform: scale(1.06);
+}
+
+.panelText {
+  display: grid;
+  gap: var(--s-3);
+  align-content: center;
+  padding: var(--s-4) clamp(var(--s-4), 3vw, var(--s-8));
+}
+
+.panelText strong {
+  max-width: 8ch;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 6rem);
+  font-weight: 400;
   font-stretch: var(--wdth-condensed);
-  line-height: 0.98;
+  line-height: 0.78;
 }
 
-.panel :global(.textlink) {
+.panelText small {
+  max-width: 28rem;
+}
+
+.panelText em {
   justify-self: start;
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  font-style: normal;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-@media (min-width: 900px) {
-  .triptych {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.panel:focus-visible {
+  outline-offset: -6px;
+}
+
+@media (max-width: 767px) {
+  .panel {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
   }
 
   .image {
-    aspect-ratio: 3 / 4.2;
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
-  /* The middle panel steps down – the three read as a moving line, not a row of cards. */
-  .panel:nth-child(2) {
-    margin-top: var(--s-9);
+  .panelText {
+    grid-column: 2;
+    grid-row: 3;
+    padding-inline: 0;
   }
 
-  .panel:nth-child(3) {
-    margin-top: var(--s-6);
+  .panelText small {
+    display: none;
   }
 }
 

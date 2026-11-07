@@ -209,7 +209,7 @@ export function Header({ locale, nav, socials, email, a11y, labels }: HeaderProp
             <LanguageSwitcher current={locale} label={labels.language} variant="compact" />
           </div>
           <A11yPanel locale={locale} t={a11y} />
-          <Link href={l('/#support')} className={`btn ${styles.donate}`}>
+          <Link href={l('/support')} className={`btn ${styles.donate}`}>
             {labels.donation}
           </Link>
           <MobileMenu locale={locale} nav={nav} path={path} socials={socials} email={email} labels={labels} />

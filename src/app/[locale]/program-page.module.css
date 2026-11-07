@@ -1,0 +1,70 @@
+.stack {
+  display: grid;
+  gap: var(--section);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--s-6);
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: var(--s-4);
+  min-height: 100%;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--rule);
+  background: var(--surface-paper);
+}
+
+.panel h2,
+.panel h3 {
+  margin: 0;
+}
+
+.panel p {
+  max-width: 48ch;
+}
+
+.list {
+  display: grid;
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  display: grid;
+  gap: var(--s-2);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pending {
+  color: var(--fg-muted);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+}
+
+.partnerLogo {
+  width: min(9rem, 42vw);
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.legalPending {
+  max-width: 60ch;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border-inline-start: 0.35rem solid var(--accent);
+  background: var(--surface-paper);
+}
+
+.center {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
+}

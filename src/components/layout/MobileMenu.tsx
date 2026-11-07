@@ -130,7 +130,7 @@ export function MobileMenu({ locale, nav, path, socials, email, labels }: Mobile
 
           <div className={styles.foot}>
             <LanguageSwitcher current={locale} label={labels.language} variant="full" />
-            <Link href={l('/#support')} className={`btn ${styles.donate}`}>
+            <Link href={l('/support')} className={`btn ${styles.donate}`}>
               {labels.donation}
             </Link>
             <a className={styles.mail} href={`mailto:${email}`}>

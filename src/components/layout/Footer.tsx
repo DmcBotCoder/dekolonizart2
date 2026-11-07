@@ -20,6 +20,9 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
         ['/services', f.faqs],
         ['/events', t.nav.events.label],
         ['/contact', f.contact],
+        ['/support', t.meta.titles.support],
+        ['/community', t.meta.titles.community],
+        ['/references', t.meta.titles.references],
       ],
     },
     {
@@ -66,10 +69,15 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
             labels={{
               heading: f.newsletter,
               emailLabel: f.emailLabel,
+              consent: f.consent,
               send: f.send,
+              sending: f.sending,
               thanks: f.thanks,
               errEmpty: f.errEmpty,
               errInvalid: f.errInvalid,
+              errConsent: f.errConsent,
+              errUnavailable: f.errUnavailable,
+              errProvider: f.errProvider,
             }}
           />
         </div>
@@ -98,6 +106,12 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
           </li>
           <li>
             <Link href={l('/datenschutz')}>{f.datenschutz}</Link>
+          </li>
+          <li>
+            <Link href={l('/terms-of-sale')}>{t.meta.titles.terms}</Link>
+          </li>
+          <li>
+            <Link href={l('/refund-policy')}>{t.meta.titles.refund}</Link>
           </li>
           <li>
             <Link href={l('/accessibility')}>{f.accessibility}</Link>

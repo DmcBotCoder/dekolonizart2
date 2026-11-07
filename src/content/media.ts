@@ -7,6 +7,12 @@ export interface ImageAsset {
   height: number;
 }
 
+/** Optional media attached to a production. Empty media is never rendered. */
+export type ProductionMedia =
+  | { kind: 'image'; image: ImageAsset; alt: string }
+  | { kind: 'video'; provider: 'youtube'; url: string; title: string }
+  | { kind: 'audio'; url: `https://${string}`; title: string };
+
 type PosterKey = keyof Messages['posters'];
 
 /** Posters and production images. Alt texts live in `messages.posters`. */

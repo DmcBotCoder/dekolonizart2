@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Facts } from '@/components/events/Facts';
+import { VibetixEmbed } from '@/components/events/VibetixEmbed';
 import { Faq } from '@/components/ui/Faq';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { PosterButton } from '@/components/ui/PosterButton';
@@ -56,6 +57,7 @@ export default async function BookingPage({ params }: Props) {
   const titleLang = production.titleLang && production.titleLang !== locale ? production.titleLang : undefined;
   const poster = production.image?.kind === 'poster' ? resolvePoster(t, production.image.key) : undefined;
   const online = resolveBooking(production);
+  const embed = production.booking.enabled ? production.booking.embed : undefined;
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(format(b.emailSubject, { title: production.shortTitle }))}`;
   const [beforeEmail, afterEmail] = b.byEmail.split('{email}');
 
@@ -119,7 +121,9 @@ export default async function BookingPage({ params }: Props) {
               <Facts items={facts} columns={1} />
             </div>
             <div className={styles.counterfoil}>
-              {online ? (
+              {embed ? (
+                <p>{format(b.provider, { provider: 'Vibetix' })}</p>
+              ) : online ? (
                 <>
                   <p>{format(b.provider, { provider: online.provider })}</p>
                   <a className="ticket" href={online.url} target="_blank" rel="noopener">
@@ -146,6 +150,16 @@ export default async function BookingPage({ params }: Props) {
               )}
             </div>
           </div>
+
+          {embed && (
+            <div className={styles.embed} aria-label={format(b.provider, { provider: 'Vibetix' })}>
+              <VibetixEmbed
+                embedId={embed.embedId}
+                checkoutUrl={embed.checkoutUrl}
+                labels={{ loading: b.embedLoading, error: b.embedError, fallback: b.embedFallback }}
+              />
+            </div>
+          )}
 
           <Link href={localizePath(productionPath(production.slug), locale)} className={`btn-line ${styles.back}`}>
             {t.showCard.info}

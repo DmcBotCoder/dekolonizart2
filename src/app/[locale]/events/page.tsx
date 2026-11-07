@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { EventSearch } from '@/components/events/EventSearch';
+import { VibetixEmbed } from '@/components/events/VibetixEmbed';
 import { PageHeader } from '@/components/ui/PageHeader';
-import { resolveEvents } from '@/content/events';
+import { SectionHead } from '@/components/ui/SectionHead';
+import { vibetixEventListEmbed } from '@/content/productions';
 import { getMessages } from '@/i18n/messages';
 import { getI18n, getLocale } from '@/i18n/server';
 import { buildCrumbs } from '@/lib/breadcrumbs';
@@ -29,20 +30,14 @@ export default async function EventsPage() {
         kicker={e.eyebrow}
         title={e.title}
       />
-      <section className="section-tight">
+      <section className="section-tight" aria-labelledby="vibetix-events-title">
         <div className="container">
-          <EventSearch
-            events={resolveEvents(t, locale)}
-            labels={{
-              search: e.searchLabel,
-              placeholder: e.searchPlaceholder,
-              count: e.count,
-              countOne: e.countOne,
-              noResults: e.noResults,
-              reset: e.reset,
-              filter: t.ui.filterLabel,
-              all: t.ui.allCategories,
-            }}
+          <SectionHead id="vibetix-events-title" title={e.vibetixH} />
+          <p className="lead">{e.vibetixP}</p>
+          <VibetixEmbed
+            embedId={vibetixEventListEmbed.embedId}
+            checkoutUrl={vibetixEventListEmbed.checkoutUrl}
+            labels={{ loading: t.booking.embedLoading, error: t.booking.embedError, fallback: t.booking.embedFallback }}
           />
         </div>
       </section>
