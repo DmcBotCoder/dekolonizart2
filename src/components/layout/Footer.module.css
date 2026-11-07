@@ -1,0 +1,209 @@
+.footer {
+  padding-top: var(--section-tight);
+  border-top: 6px solid var(--terracotta);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--s-6);
+  padding-bottom: var(--s-8);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* The claim, set like the hero: compressed past, widening future. */
+.claim {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(min(2.25rem, 9.5vw), 1rem + 5.4vw, 5.75rem);
+  line-height: 0.92;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  letter-spacing: -0.01em;
+}
+
+.claim0 {
+  font-stretch: var(--wdth-semi);
+}
+
+.claim1 {
+  font-stretch: var(--wdth-compressed);
+  color: var(--fg-muted);
+}
+
+.claim2 {
+  font-stretch: 112%;
+}
+
+/* The drawn logo, inverted for the ink ground (lines turn paper, the terracotta ramp stays warm). */
+.logo {
+  width: clamp(4.5rem, 3rem + 6vw, 9rem);
+  height: auto;
+  filter: invert(1) hue-rotate(180deg) saturate(1.4);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: var(--s-7) var(--col-gap);
+  padding-block: var(--s-8);
+}
+
+@media (min-width: 900px) {
+  .cols {
+    grid-template-columns: 1fr 1fr 1.6fr 1fr;
+  }
+}
+
+.news {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  .news {
+    grid-column: auto;
+  }
+}
+
+.h {
+  margin-bottom: var(--s-3);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  font-stretch: var(--wdth-normal);
+  line-height: 1.3;
+  color: var(--fg-muted);
+}
+
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  display: inline-flex;
+  overflow-wrap: anywhere;
+  align-items: center;
+  min-height: 2.75rem;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  font-stretch: var(--wdth-semi);
+  text-decoration: none;
+  background: linear-gradient(var(--accent-display), var(--accent-display)) left calc(100% - 0.55rem) / 0 3px no-repeat;
+  transition: background-size var(--dur-2) var(--ease-out);
+}
+
+.links a:hover {
+  background-size: 100% 3px;
+}
+
+.form {
+  display: flex;
+  max-width: 30rem;
+  border-bottom: 2px solid var(--fg);
+}
+
+.form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.5rem 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+}
+
+.form input::placeholder {
+  color: var(--fg-muted);
+  opacity: 1;
+}
+
+.form input:focus-visible {
+  outline-offset: 4px;
+}
+
+.form :global(.btn) {
+  margin-bottom: 0.4rem;
+}
+
+.err {
+  margin-top: var(--s-2);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--terracotta-light);
+}
+
+.ok {
+  margin-top: var(--s-2);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-6);
+  padding-block: var(--s-5) var(--s-6);
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  color: var(--fg-muted);
+}
+
+.legalLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legalLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.legalLinks a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.3em;
+}
+
+.motion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  color: var(--fg);
+}
+
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.motion[aria-pressed='true'] .dot {
+  background: var(--accent-display);
+  border-color: var(--accent-display);
+}

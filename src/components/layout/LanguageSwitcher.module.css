@@ -1,0 +1,74 @@
+.lang ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lang a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--fg-muted);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.lang a:hover {
+  color: var(--fg);
+}
+
+.lang a[aria-current] {
+  color: var(--fg);
+}
+
+/* The current language sits on a short accent bar — the same marker as the current page. */
+.lang a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.45rem;
+  width: 1.1rem;
+  height: 3px;
+  background: var(--accent-display);
+  transform: translateX(-50%) scaleX(0);
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.lang a[aria-current]::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.compact a {
+  font-size: var(--fs-sm);
+  font-stretch: var(--wdth-semi);
+  letter-spacing: 0.04em;
+}
+
+.full ul {
+  gap: var(--s-5);
+  flex-wrap: wrap;
+}
+
+.full a {
+  min-width: 0;
+  font-size: var(--fs-ui);
+  font-stretch: var(--wdth-normal);
+}
+
+.full a::after {
+  left: 0;
+  bottom: 0.3rem;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.full a[aria-current]::after {
+  transform: scaleX(1);
+}
