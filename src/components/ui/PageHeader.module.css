@@ -1,0 +1,97 @@
+.header {
+  position: relative;
+  padding-block: var(--s-5) var(--section-tight);
+  overflow: hidden;
+}
+
+.paper {
+  padding-bottom: var(--s-4);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+}
+
+.text {
+  display: grid;
+  gap: var(--s-5);
+  padding-top: var(--s-6);
+}
+
+.kicker {
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  font-stretch: var(--wdth-normal);
+  line-height: 1.35;
+  color: var(--accent);
+}
+
+.title {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+  max-width: 14ch;
+}
+
+.titleM {
+  font-size: clamp(2.5rem, 1.6rem + 3.8vw, 5rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+  line-height: 0.95;
+  max-width: 18ch;
+}
+
+.subtitle {
+  margin-top: calc(-1 * var(--s-2));
+}
+
+.intro {
+  max-width: 38ch;
+  color: var(--fg);
+}
+
+.extra {
+  padding-top: var(--s-2);
+}
+
+/* ---------- With an image in the torn-paper gap ---------- */
+
+.slit {
+  position: relative;
+  margin-inline: calc(-1 * var(--gutter));
+  aspect-ratio: 16 / 8;
+}
+
+@media (min-width: 640px) {
+  .slit {
+    aspect-ratio: 16 / 6.5;
+  }
+}
+
+@media (min-width: 1024px) {
+  .withImage .inner {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 1fr) minmax(0, 3.2fr);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--col-gap);
+  }
+
+  .withImage .crumbs {
+    grid-column: 1 / 3;
+  }
+
+  .withImage .text {
+    grid-column: 1;
+    padding-bottom: var(--s-6);
+  }
+
+  .slit {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    margin: calc(-1 * var(--s-5)) 0 calc(-1 * var(--section-tight));
+    aspect-ratio: auto;
+    min-height: 32rem;
+  }
+}

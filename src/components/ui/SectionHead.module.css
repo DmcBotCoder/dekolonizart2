@@ -1,0 +1,25 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-4) var(--s-6);
+  margin-bottom: var(--s-7);
+}
+
+.titles {
+  min-width: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.titles h2 {
+  max-width: 16ch;
+}
+
+.kicker {
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--accent);
+}

@@ -1,0 +1,124 @@
+.spotlight {
+  display: grid;
+  gap: var(--s-7) var(--col-gap);
+}
+
+.posterCol {
+  width: min(100%, 26rem);
+}
+
+.text {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  min-width: 0;
+}
+
+.kicker {
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.title {
+  font-size: clamp(min(2.6rem, 11vw), 1.5rem + 4.6vw, 5.75rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-condensed);
+  line-height: 0.92;
+}
+
+.subtitle {
+  display: grid;
+  gap: 0.35rem;
+  font-family: var(--font-text);
+  font-size: clamp(1.4rem, 1.1rem + 1.3vw, 2.2rem);
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.translation {
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+.lead {
+  max-width: 34ch;
+}
+
+/* 13 | 12 | 26 – the poster's own date, rebuilt in type. */
+.date {
+  display: flex;
+  align-items: stretch;
+  margin-block: var(--s-3) var(--s-2);
+  font-family: var(--font-display);
+  font-size: clamp(min(4.5rem, 19vw), 2.4rem + 8vw, 9.5rem);
+  font-weight: 800;
+  font-stretch: var(--wdth-compressed);
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+
+.date span + span {
+  margin-left: 0.18em;
+  padding-left: 0.18em;
+  border-left: 0.035em solid var(--accent-display);
+}
+
+.actions {
+  margin-top: var(--s-3);
+}
+
+.credit {
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+@media (min-width: 900px) {
+  .spotlight {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  .posterCol {
+    width: 100%;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+
+  .flip .posterCol {
+    order: 2;
+  }
+
+  .flip {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .spotlight {
+    grid-template-columns: minmax(0, 4.5fr) minmax(0, 1fr) minmax(0, 6.5fr);
+  }
+
+  .text {
+    grid-column: 3;
+  }
+
+  .flip {
+    grid-template-columns: minmax(0, 6.5fr) minmax(0, 1fr) minmax(0, 4.5fr);
+  }
+
+  .flip .text {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .flip .posterCol {
+    grid-column: 3;
+  }
+}

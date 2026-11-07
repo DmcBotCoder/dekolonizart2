@@ -1,0 +1,13 @@
+/* Glossary words: dotted underline (a definition is one step away), solid on hover. */
+.term {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+
+.term:hover {
+  text-decoration-style: solid;
+}

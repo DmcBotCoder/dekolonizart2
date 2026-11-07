@@ -1,7 +1,7 @@
 .todo {
   padding: 0.05em 0.3em;
-  background: #f7e0d6;
-  color: var(--camwood-700);
+  background: var(--clay);
+  color: var(--maroon);
   font-family: var(--font-ui);
   font-size: 0.9em;
   font-weight: 600;

@@ -1,0 +1,14 @@
+.curtain {
+  position: relative;
+  overflow: hidden;
+}
+
+.curtain :global(.curtain-inner) {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+}
+
+.curtain img {
+  object-fit: cover;
+}
