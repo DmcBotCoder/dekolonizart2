@@ -54,7 +54,8 @@
   letter-spacing: -0.005em;
 }
 
-@media (max-width: 379px) {
+/* Phones: the wordmark + logo + A11y + MENU no longer fit in the gutter-to-gutter width, so the logo tile alone carries the brand. */
+@media (max-width: 479px) {
   .word {
     display: none;
   }
